@@ -1,0 +1,110 @@
+html{
+    
+    box-sizing: border-box;
+};
+
+body{
+    margin: 0;
+    height: 100vh;
+    font-size: 2.6rem;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.grid-container{
+    display: grid;
+    grid-template-areas: 
+    'header'
+    'main'
+    'footer';
+
+    grid-template-columns: 1fr;
+    grid-template-rows: 5rem 1fr 5rem ;
+    height:100%;
+}
+
+header{
+    grid-area: header;
+    background-color: rgb(252, 140, 140);
+    width:100%;
+}
+
+footer{
+    grid-area: footer;
+    background-color: rgb(252, 252, 206);
+    color: brown;
+}
+
+a{
+    text-decoration: none;
+}
+
+a:hover{
+    color:dodgerblue;
+}
+
+a.brand{
+    color: ghostwhite;
+    font-size: 3rem;
+    font-weight: bold;
+}
+.row{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.row.footercls{
+   
+    justify-content: center;
+   
+    
+}
+
+h1{
+    font-size: 1.8rem;
+    padding: 1rem 0;
+}
+
+h2{
+    font-size: 1.6rem;
+    padding: 1rem 0;
+}
+/*Images*/
+img{
+    border-radius: 0.5rem;
+}
+
+img.medium{
+    max-width: 29rem;
+    width: 100;
+}
+
+/*card*/
+
+.card{
+    border: 0.1rem #4b21e4 solid;
+    background-color: honeydew;
+    border-radius: 00.5rem;
+    margin: 1rem;
+    text-shadow: hotpink;
+
+}
+
+.card-body{
+    padding: 1rem;
+}
+
+.card-body > *{
+    margin-bottom: 0.5rem;
+}
+
+.price{
+    font-size: 2rem;
+}
+
+/*Rating*/
+.rating span{  /*Rating span means all sections under the rating tag*/
+    color: hsl(44, 80%, 73%);
+    margin:0.1rem;
+}
