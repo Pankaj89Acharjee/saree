@@ -1,22 +1,34 @@
 import express from 'express';
 import mongoose from 'mongoose';
-//import dotenv from 'dotenv';
+import dotenv from 'dotenv';
 import productRouter from './routers/productRouter.js';
 import userRouter from './routers/userRouter.js';
+import orderRouter from './routers/orderRouter.js';
+import uploadRouter from './routers/uploadRouter.js';
+import path from 'path';
 
-//dotenv.config();
+dotenv.config();
 
 const app = express();
-mongoose.connect(process.env.MONGODB_URL || 'mongodb://localhost/saree', {
-  useNewUrlParser: true,
- useUnifiedTopology: true,
+app.use(express.json());
+app.use(express.urlencoded({extended: true}));
+
+mongoose.connect(process.env.MONGODB_URL || 'mongodb://localhost/saree', 
+  );
  
-});
-
-
-app.use('/api/products', productRouter);
-
+app.use('/api/uploads', uploadRouter);
 app.use('/api/users', userRouter);
+app.use('/api/products', productRouter);
+app.use('/api/orders', orderRouter); 
+/*API FOR PAYPAL*/
+app.get('/api/config/paypal', (req, res) => {
+  res.send(process.env.PAYPAL_CLIENT_ID || 'sb'); /*Now building paypal button in the Orderscreen*/
+})
+
+/*For displaying the newly added image and map that image to show in the UI*/
+const __dirname = path.resolve(); /*path is a class and needs to be imported*/
+app.use('/uploads', express.static(path.join(__dirname, '/uploads')));
+/*In the above, joining the new file and pointing it to the new location*/
 
 
 app.get('/', (req, res) => {
@@ -27,9 +39,9 @@ app.use((err, req, res, next) => {
   res.status(500).send({message: err.message});
 });
 
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 5001;
 
 app.listen(port, () => {
-  console.log(`Serve at http://localhost:${port}`);
+  console.log(`Server at http://localhost:${port}`);
 });
 

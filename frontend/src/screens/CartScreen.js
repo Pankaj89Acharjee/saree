@@ -24,7 +24,7 @@ export default function CartScreen(props) {
   };
 
   const checkOutHandler = () =>{
-    props.history.push('/signin?redirect=shipping');
+    props.history.push('/signin?redirect=shipping'); /**********RECHECK HERE FOR Checkout module */
   };
  
   return (
@@ -36,7 +36,7 @@ export default function CartScreen(props) {
           <MessageBox>
               Your Cart is empty <br/>
               <Link to = "/">Go to Shopping Section</Link>
-          </MessageBox>
+          </MessageBox> 
           :
           (
             <ul>
@@ -70,7 +70,7 @@ export default function CartScreen(props) {
                     </div>
 
                     <div /*4th Col showing price per unit*/>
-                      Rs. {item.price}
+                     Rs. {item.price} 
                     </div>
 
                     <div /*5th Col for delete button. item.product means productId*/>

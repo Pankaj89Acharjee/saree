@@ -58,12 +58,13 @@ a.brand{
 }
 
 .badge{
-  background-color:blue;
+  background-color:darkcyan;
   color:cornsilk;
-  border-radius: 50%;
-  padding: 0.2rem, 0.7rem;
+  border-radius: 75%;
+  padding: 0.2rem, 0.2rem;
   margin-left: 0.2rem ;
-  font-size: 1.4rem;
+  margin-right: 1.2rem;
+  font-size: 1.2rem;
 }
 .row{
   display: flex;
@@ -201,6 +202,9 @@ img.large {
 }
 
 /* Alert */
+.loading{
+  display: block !important;
+}
 .success {
   color: #20a020;
 }
@@ -222,4 +226,118 @@ img.large {
 .alert-danger{
   color:rgb(236, 17, 28);
   background-color: whitesmoke;
+}
+
+/*For Sign-in form*/
+.form{
+  max-width: 35rem;
+  margin: 0 auto;
+  font-size:medium;
+  font-weight: 1rem;
+  font-style: italic;
+  color:darkmagenta;
+  text-align: center;
+}
+
+.form > div{
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  padding: 1rem;
+  /*margin-top: 1.5rem;*/
+}
+
+.form label{
+  margin: 1rem 0;
+  /*display:flexbox;*/
+ 
+}
+.form-razor{
+  color: #20a020;
+  font-style: normal;
+  font-weight: bold;
+  padding: 1.2rem;
+  background-color: antiquewhite;
+}
+
+.form-paypal{
+  color: #20a020;
+  font-style: normal;
+  font-weight: bold;
+  padding: 1.2rem;
+  background-color: antiquewhite;
+}
+
+.dropdown{
+  display: inline-block;
+  position: relative;
+}
+
+.dropdown-content{
+  position: relative;
+  display: none;
+  right: 0;
+  min-width: 8rem;
+  padding: 1rem;
+  z-index: 1;
+  background-color:ghostwhite;
+  margin: 0;
+  margin-top: 0.4rem;
+  border-radius: 0.5rem;  
+}
+
+.dropdown:hover .dropdown-content{
+  display: block;
+  position:absolute;
+}
+
+/* Check out steps*/
+.checkout-steps > div{
+
+  border-top: 0.9rem #4b21e4;
+  border-radius: 5rem;
+  color: #f0c040;
+  flex: 1;
+  padding: 1rem;
+  font-weight: bold;
+}
+
+.checkout-steps > div.active{
+  border-top-color: coral;
+  color:coral;
+}
+
+/*TABLE*/
+.table{
+  width: 100%;
+  border-collapse: collapse;
+
+}
+
+.table tbody tr:nth-of-type(odd) {
+  /*This is means odd positions will be of same colours and the other
+  rows of alternate position will be of different colours*/
+  background-color:#a4a4a4 ;
+}
+
+.table thead, table tr{
+  background-color: cornflowerblue;
+  font-weight: bold;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+.table tbody tr:nth-of-type(even) {
+  /*This is means odd positions will be of same colours and the other
+  rows of alternate position will be of different colours*/
+  background-color:#81f7c9 ;
+}
+.table td, .table th {
+  text-align: center;
+  border: 0.1rem solid #f3f7f5;
+  padding: 1rem ;
+}
+
+.table button {
+  margin: 0 0.2rem;
+  font-size: 1.2rem;
+
 }
