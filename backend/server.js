@@ -30,11 +30,15 @@ const __dirname = path.resolve(); /*path is a class and needs to be imported*/
 app.use('/uploads', express.static(path.join(__dirname, '/uploads')));
 /*In the above, joining the new file and pointing it to the new location*/
 
+app.use(express.static(path.join(__dirname, '/frontend/build')));
+app.get('*', (req, res) => 
+  res.sendFile(path.join(__dirname, '/frontend/build/index.html'))
+);
 
-app.get('/', (req, res) => {
+/*app.get('/', (req, res) => {
   res.send('Server is ready');
 });
-
+*/
 app.use((err, req, res, next) => {
   res.status(500).send({message: err.message});
 });
