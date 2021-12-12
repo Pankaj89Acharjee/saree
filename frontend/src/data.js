@@ -70,7 +70,7 @@ const data = {
         brand: 'Adidas',
         rating: 4.5,
         numReviews: 15,
-        description: 'high quality product',
+        description: 'very high quality product',
       },
     ],
   };
