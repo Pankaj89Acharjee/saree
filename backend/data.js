@@ -12,7 +12,7 @@ const data = {
     {
       name: 'Pinku',
       email: 'pqr@sty.com',
-      password: await bcrypt.hash('1234', 8),
+      password: bcrypt.hashSync('1234', 8), /* PREVIOUS ONE is -> *await bcrypt.hash('1234', 8),*/
       isAdmin: false,
     }
 
