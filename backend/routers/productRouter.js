@@ -80,7 +80,7 @@ productRouter.put('/:id', isAuth, isAdmin, expressAsyncHandler(async(req, res) =
 /*API for deleting products in the backend*/
 productRouter.delete('/:id', isAdmin, isAuth, expressAsyncHandler(async(req, res) => {
     const productId = req.params.id;
-    const product = await Product.findByIdAndDelete(productId);
+    const product = await Product.findById(productId);
     if(product) { /*If product exists*/
         const deleteProduct = await product.remove();
         res.send({ message: 'The product has been deleted', product: deleteProduct });
