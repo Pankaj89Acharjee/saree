@@ -35,7 +35,7 @@ export default function CartScreen(props) {
           { cartItems.length === 0 ? 
           <MessageBox>
               Your Cart is empty <br/>
-              <Link to = "/">Go to Shopping Section</Link>
+              <Link to = "/">Go back to Shopping Section</Link>
           </MessageBox> 
           :
           (
@@ -71,7 +71,7 @@ export default function CartScreen(props) {
                     </div>
 
                     <div /*4th Col showing price per unit*/>
-                        <h4> Rs. {item.price} Per Unit </h4>
+                        <h4> Rs. {item.price}/- Per Unit </h4>
                     </div>
 
                     <div /*5th Col for delete button. item.product means productId*/>
