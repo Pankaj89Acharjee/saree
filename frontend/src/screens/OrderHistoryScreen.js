@@ -14,9 +14,12 @@ export default function OrderHistoryScreen(props) {
     const dispatch = useDispatch();
 
     useEffect(() => {
+        if(!orders) {
+
+    
         /*Calling fx listOrderMine from Actions ==>> orderActions*/
         dispatch(listOrderMine());
-    }, [dispatch]);
+    }}, [orders, dispatch]);
     /*orderMineList is in store.js*/
     return (
         <div className = "container">

@@ -1,0 +1,175 @@
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useParams } from "react-router-dom";
+import { listProducts } from "../actions/productActions";
+import LoadingBox from "../components/LoadingBox";
+import MessageBox from "../components/MessageBox";
+import Product from "../components/Product";
+import Rating from "../components/Rating";
+import { prices, ratings } from "../utils";
+
+export default function SearchScreen (props) {
+    /*importing name. Default value is all means if there is no name, then use all names.
+    useParams is a fx(hook) from React DOM*/
+    const {
+        name = 'all', 
+        category='all', 
+        min=0, max=0, 
+        rating = 0, 
+        order = 'newest',
+        pageNumber = 1 } = useParams();
+    const dispatch = useDispatch();
+
+    /*getting product list*/
+    const productList = useSelector((state) => state.productList);
+    const {loading, error, products, page, pages} = productList;
+
+
+     /*getting product list category wise from redux store*/
+     const productCategoryList = useSelector((state) => state.productCategoryList);
+     const {loading: loadingCategories, error: errorCategories, categories} = productCategoryList;
+
+
+    useEffect(() => {
+        dispatch(listProducts({
+            pageNumber,
+            name: name !== 'all' ? name: '',
+            category: category !== 'all' ? category: '',
+            min, max, rating, order,
+        })
+      );
+    }, [dispatch, name, category, min, max, rating, order, pageNumber]);
+
+    const getFilterUrl = (filter) => {
+        const filterPage = filter.page || pageNumber;
+        const filterCategory = filter.category || category;
+        const filterName = filter.name || name;
+        const filterRating = filter.rating || rating;
+        const sortOrder = filter.order || order;
+        const filterMin = filter.min ? filter.min : filter.min === 0 ? 0 : min;
+        const filterMax = filter.max ? filter.max : filter.max === 0 ? 0 : max;
+        return `/search/category/${filterCategory}/name/${filterName}/min/${filterMin}/max/${filterMax}/rating/${filterRating}/order/${sortOrder}/pageNumber/${filterPage}`;
+    };
+    return(
+        <div>
+            <div className="row">
+            {loading ? <LoadingBox></LoadingBox>
+            : error ? <MessageBox variant="danger">{error}</MessageBox>
+            : 
+            <div>
+                {products.length} Results found
+            </div>
+            }
+            </div>
+
+            <div className="row">
+               Sort Products By {' '}
+                <select value={order} onChange={(e) => {
+                    props.history.push(getFilterUrl({ order: e.target.value}));
+                }}>
+                
+                   <option value = "newest">Newest Arrivals</option> 
+                   <option value = "lowest">Price Low to High</option> 
+                   <option value = "highest">Price High to Low</option> 
+                   <option value = "toprated">Avg Customer Reviews</option> 
+                </select>
+            </div>
+
+            <div className="row top">
+                <div className="col-1">
+                    <h3>All Categories</h3>
+                 <div>
+                    {
+                        loading ? (
+                        <LoadingBox></LoadingBox>
+                        ) : error ? (
+                        <MessageBox variant="danger">{error}</MessageBox>
+                        ) : (                              
+                        
+                        <ul /*Show category wise list*/>   
+                            <li>
+                                <Link className={ 'all' === category ? 
+                                'active': ''} /*Checking category in the URL*/
+                                to={getFilterUrl({ category: 'all' })}></Link>
+                            </li>                         
+                           {products.map((c) => (
+                               <li key={c}>
+                                   
+                                   <Link
+                                        className={c === category ? 'active': ''} /*Checking category in the URL*/
+                                        to={getFilterUrl({ category: c.category })}>{c.category}</Link>
+                                    
+                               </li>
+                           ))} 
+                        </ul>
+
+                        )}
+                  </div>
+
+                  <div>
+                      <h3>Price</h3>
+                      <ul /*Defining prices in src >> utils.js*/>
+                          {prices.map((p) => (
+                              <li key={p.name}>
+                                  <Link to = {getFilterUrl({ min: p.min, max: p.max})}
+                                  className={`${p.min}-${p.max}` === `${min}-${max}` ? 'active' : ''}>
+                                     {p.name} 
+                                  </Link>
+                              </li>
+                          ))}
+                      </ul>
+                  </div>
+
+                  <div>
+                      <h3>Customer Reviews</h3>
+                      <ul /*Defining prices in src >> utils.js*/>
+                          {ratings.map((r) => (
+                              <li key={r.rating}>
+                                  <Link to = {getFilterUrl({ rating: r.rating })}
+                                  className = {`${r.rating}` === `${rating}` ? 'active' : ''}>
+
+                                    <Rating caption = {" & up"} rating = {r.rating}></Rating>                           
+                                  </Link>
+                              </li>
+                          ))}
+                      </ul>
+                  </div>
+                </div>
+
+                <div className="col-3">
+                   {loading ? <LoadingBox></LoadingBox>
+                   : error ? <MessageBox variant="danger">{error}</MessageBox>
+                   :
+                   <>
+                        {products.length === 0 && (
+                            <MessageBox>No Products to show</MessageBox>
+                        )}
+                        <div className="row center" /*Showing products accordint to productId after searching in the search box*/>
+                            {products.map((product) => (
+                                <Product key = {product._id} product = {product}></Product>
+                            ))}
+
+                        </div>
+
+                        <div className="row center pagination" /*For showing page numbers in the below*/>
+                           {
+                               [...Array(pages).keys()].map((x) => (
+
+                               
+                                   <Link key={x + 1} to = {getFilterUrl({ page: x + 1})}>
+                                       Page{x + 1}</Link>
+                                ))
+                           } 
+                        </div>
+                   
+                   </>
+                
+                    } 
+                </div>
+
+            </div>
+        </div>
+
+        
+    )
+}

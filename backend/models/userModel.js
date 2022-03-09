@@ -4,7 +4,16 @@ const userSchema = new mongoose.Schema({
     name: {type: String, required: true},
     email: {type: String, required: true, unique: true},
     password: {type: String, required: true},
-    isAdmin: {type: Boolean, required: false}
+    isAdmin: {type: Boolean, required: false},
+    isSeller: {type: Boolean, required: false},
+    seller: { /*We need a form to enter the following data in the ProfileScreen.js*/
+        name: String,
+        logo: String,
+        description: String,
+        rating: {type: Number, default: 0, required: true},
+        numReviews: {type: Number, default: 0, required: true},
+
+    },
 }, {
     timestamps: true
 }

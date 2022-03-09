@@ -20,7 +20,10 @@ import { ORDER_CREATE_REQUEST,
     ORDER_DELETE_SUCCESS,
     ORDER_DELIVER_REQUEST,
     ORDER_DELIVER_SUCCESS,
-    ORDER_DELIVER_FAIL,} from '../constants/orderConstants';
+    ORDER_DELIVER_FAIL,
+    ORDER_SUMMARY_FAIL,
+    ORDER_SUMMARY_SUCCESS,
+    ORDER_SUMMARY_REQUEST} from '../constants/orderConstants';
 
 export const createOrder = (order) => async (dispatch, getState) => {
     dispatch({type: ORDER_CREATE_REQUEST, payload: order});
@@ -112,11 +115,11 @@ export const listOrderMine = () => async(dispatch, getState) => {
 };
 
 /*For viewing order history by admins. "listOrders" is a fx in OrderListScreen.js*/
-export const listOrders = () => async(dispatch, getState) => {
+export const listOrders = ( { seller = ' '}) => async(dispatch, getState) => {
     dispatch({ type: ORDER_LIST_REQUEST});
     const {userSignin: {userInfo}} = getState();
     try{
-        const { data } = await Axios.get('/api/orders', {
+        const { data } = await Axios.get(`/api/orders?seller=${seller}`, {
             headers: {Authorization: `Bearer ${userInfo.token}`}
         });
         dispatch({ type: ORDER_LIST_SUCCESS, payload: data});
@@ -163,3 +166,22 @@ export const deliverOrder = (orderId) => async(dispatch, getState) => {
             dispatch({ type: ORDER_DELIVER_FAIL, payload: message});
         }
     } 
+
+    /*Order Summary from the DashboardScreen.js*/
+export const summaryOrder = () => async(dispatch, getState) => {
+    dispatch ({type: ORDER_SUMMARY_REQUEST });
+    const { userSignin : {userInfo} } = getState();
+
+    try{
+        const {data} = await Axios.get('/api/orders/summary', {
+            headers: { Authorization: `Bearer ${userInfo.token}`},
+        });
+        dispatch({ type: ORDER_SUMMARY_SUCCESS, payload: data});
+    } catch (error) {
+        const message = error.message && error.response.data.message
+            ? error.response.data.message
+            : error.message;
+            dispatch({ type: ORDER_SUMMARY_FAIL, payload: message});
+    }
+
+} 

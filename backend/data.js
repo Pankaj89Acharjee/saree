@@ -8,12 +8,29 @@ const data = {
       email: 'abc@xyz.com',
       password: bcrypt.hashSync('1234', 8), /*New format for bcrypt*/
       isAdmin: true,
+
+      /*For Bug fixing */
+      isSeller: true,
+      seller: {
+        name: 'Puma',
+        logo: '/images/home1.jpg',
+        description: 'best seller',
+        rating: 4.5,
+        numReviews: 120,
+      },
     },
     {
-      name: 'Pinku',
-      email: 'pqr@sty.com',
+      name: 'PinkuTitu',
+      email: 'pqrs@styu.com',
       password: bcrypt.hashSync('1234', 8), /* PREVIOUS ONE is -> *await bcrypt.hash('1234', 8),*/
       isAdmin: false,
+    },
+
+    {
+      name: 'Pankaj Acharjee',
+      email: 'pankaj2007acharjee@gmail.com',
+      password: bcrypt.hashSync('1234', 8),
+      isAdmin: true,
     }
 
   ],
@@ -23,7 +40,7 @@ const data = {
       
       name: 'Nike Slim Shirt',
       category: 'Shirts',
-      image: '/images/p1.jpg',
+      image: '/images/tshirt.jpg',
       price: 120,
       countInStock: 10,
       brand: 'Nike',
@@ -35,7 +52,7 @@ const data = {
  
       name: 'Adidas Fit Shirt',
       category: 'Shirts',
-      image: '/images/p2.jpg',
+      image: '/images/tshirt2.jpg',
       price: 100,
       countInStock: 20,
       brand: 'Adidas',
@@ -43,54 +60,10 @@ const data = {
       numReviews: 10,
       description: 'high quality product',
     },
-    {
-     
-      name: 'Lacoste Free Shirt',
-      category: 'Shirts',
-      image: '/images/p3.jpg',
-      price: 220,
-      countInStock: 0,
-      brand: 'Lacoste',
-      rating: 4.8,
-      numReviews: 17,
-      description: 'high quality product',
-    },
-    {
-    
-      name: 'Nike Slim Pant',
-      category: 'Pants',
-      image: '/images/p4.jpg',
-      price: 78,
-      countInStock: 15,
-      brand: 'Nike',
-      rating: 4.5,
-      numReviews: 14,
-      description: 'high quality product',
-    },
-    {
-    
-      name: 'Puma Slim Pant',
-      category: 'Pants',
-      image: '/images/p5.jpg',
-      price: 65,
-      countInStock: 5,
-      brand: 'Puma',
-      rating: 4.5,
-      numReviews: 10,
-      description: 'high quality product',
-    },
-    {
-     
-      name: 'Adidas Fit Pant',
-      category: 'Pants',
-      image: '/images/p6.jpg',
-      price: 139,
-      countInStock: 12,
-      brand: 'Adidas',
-      rating: 4.5,
-      numReviews: 15,
-      description: 'high quality product',
-    },
+   
+ 
+  
+  
   ],
 };
 export default data;

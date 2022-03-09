@@ -1,15 +1,20 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Link, useParams } from "react-router-dom";
 import { createProduct, deleteProduct, listProducts } from "../actions/productActions";
 import LoadingBox from "../components/LoadingBox";
 import MessageBox from "../components/MessageBox";
 import { PRODUCT_CREATE_RESET, PRODUCT_DELETE_RESET } from "../constants/productConstants";
 
 export default function ProductListScreen(props) {
+
+    const { pageNumber = 1} = useParams();
+    /*For specifying for SELLER*/
+    const sellerMode = props.match.path.indexOf('/seller') >=0; 
     const productList = useSelector((state) => state.productList); /*Importing from rext Redux*/
     /*We also created productList() object in the HomeScreen.js*/
     /*Using it*/
-    const { loading, error, products} = productList;
+    const { loading, error, products, page, pages} = productList;
 
 
 
@@ -25,6 +30,8 @@ export default function ProductListScreen(props) {
     const productDelete = useSelector(state => state.productDelete); 
     const { loading: loadingDelete, error: errorDelete, success: successDelete} = productDelete;
 
+    const userSignin = useSelector((state) => state.userSignin);
+    const {userInfo} = userSignin;
 
 
     const dispatch = useDispatch();
@@ -37,8 +44,18 @@ export default function ProductListScreen(props) {
        if(successDelete) {
            dispatch({ type: PRODUCT_DELETE_RESET});
        }
-        dispatch(listProducts()); /*Imported from Actions/productActions*/
-    }, [ createdProduct, dispatch, props.history, successCreate, successDelete]);
+        dispatch(listProducts({seller: sellerMode ? userInfo._id : '', pageNumber /*If SellerMode is true, then show filtered products of that seller*/
+        })
+        ); /*Imported from Actions/productActions*/
+    }, [ createdProduct, 
+        dispatch, 
+        props.history, 
+        successCreate, 
+        successDelete, 
+        sellerMode, 
+        userInfo._id,
+        pageNumber
+        ]);
  
 
 
@@ -74,7 +91,7 @@ export default function ProductListScreen(props) {
                 : error ? (<MessageBox variant = "danger">{error}</MessageBox>
                 ) : (
                     
-               
+               <>
                 <table className="table">
                     <thead>
                         <tr>
@@ -120,6 +137,19 @@ export default function ProductListScreen(props) {
                         }
                     </tbody>
                 </table>
+
+                <div className="row1 center pagination" /*For showing page numbers in the below*/>
+                {
+                    [...Array(pages).keys()].map((x) => (
+
+    
+                        <Link key={x + 1 /*For showing page number*/} 
+                        to = {`/productlist/pageNumber/${x + 1}`}>
+                        P{x + 1}</Link>
+                    ))
+                } 
+                </div>
+                </>
              )}
         </div>
     );

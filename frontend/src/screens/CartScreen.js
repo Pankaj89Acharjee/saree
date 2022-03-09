@@ -43,7 +43,7 @@ export default function CartScreen(props) {
               { cartItems.map((item) => (
                 <li key = {item.product}>
                   <div className = "row" /*For 5 coloums*/> 
-                    <div /*!st Col for image*/> 
+                    <div /*1st Col for image*/> 
                       <img src = {item.image} alt = {item.name} className = "small">                      
                       </img>
                     </div>
@@ -53,6 +53,7 @@ export default function CartScreen(props) {
                     </div>
 
                     <div /*3rd Col for number of items to buy*/>
+                     
                       <select value = {item.qty} 
                       onChange = {e => dispatch(addToCart(item.product, Number(e.target.value))
                       )                           /*addToCart handler uses two parameters*/
@@ -61,7 +62,7 @@ export default function CartScreen(props) {
                       {[...Array(item.countInStock).keys()].map(
                                 (x) => (
                                   <option key={x + 1} value={x + 1}>
-                                    {x + 1}
+                                    {x + 1}items
                                   </option>
                                 )
                               )}
@@ -70,7 +71,7 @@ export default function CartScreen(props) {
                     </div>
 
                     <div /*4th Col showing price per unit*/>
-                     Rs. {item.price} 
+                        <h4> Rs. {item.price} Per Unit </h4>
                     </div>
 
                     <div /*5th Col for delete button. item.product means productId*/>

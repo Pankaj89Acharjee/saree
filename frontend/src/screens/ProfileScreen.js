@@ -13,6 +13,13 @@ export default function ProfileScreen(props) {
     const [password, setPassword] = useState(' ');
     const [confirmPassword, setConfirmPassword] = useState(' ');
 
+    /*Hooks For Entering Seller data*/
+    const [sellerName, setSellerName] = useState(' ');
+    const [sellerLogo, setSellerLogo] = useState(' ');
+    const [sellerDescription, setSellerDescription] = useState(' ');
+
+
+
 
      
     /*Getting 'signin' details from Redux store for passing parameter to the detailsUser() fx
@@ -54,6 +61,11 @@ export default function ProfileScreen(props) {
             /*Filling name and email from the backend*/
             setName(user.name);
             setEmail(user.email);
+            if(user.seller) {
+                setSellerName(user.seller.name);
+                setSellerLogo(user.seller.logo);
+                setSellerDescription(user.seller.description);
+            }
         }
     }, [dispatch, userInfo._id, user]);
 
@@ -66,7 +78,19 @@ export default function ProfileScreen(props) {
         } else {
             dispatch(updateUserProfile({ /*A new action created and define it in userActions file
                 as well as create a constant in the constants folder*/
-                userId: user._id, name, email, password}));
+                /*The below data is passed to the database*/
+                userId: user._id, 
+                name, 
+                email, 
+                password,
+                sellerName,
+                sellerLogo,
+                sellerDescription,
+
+
+            
+            })
+         );
         }
     };
 
@@ -124,7 +148,37 @@ export default function ProfileScreen(props) {
                                onChange = {(e) => setConfirmPassword(e.target.value)}>
                                
                         </input>
-                    </div>
+                    </div>   
+
+                    {
+                        /*For Seller DATA input*/
+                        user.isSeller && (
+                            <>
+                            <h2>Seller Details</h2>
+                            <div>
+                                <label htmlFor='sellerName'>Seller Name</label>
+                                <input id = "sellerName" type="text" placeholder='Enter Seller Name' 
+                                value={sellerName} onChange={(e) => setSellerName(e.target.value)}>
+                                </input>                          
+                            </div>
+
+                            <div>
+                                <label htmlFor='sellerLogo'>Seller Logo</label>
+                                <input id = "sellerLogo" type="text" placeholder='Put Seller Logo' 
+                                value={sellerLogo} onChange={(e) => setSellerLogo(e.target.value)}>
+                                </input>                          
+                            </div>
+
+
+                            <div>
+                                <label htmlFor='sellerDescription'>Seller Description</label>
+                                <input id = "sellerDescription" type="text" placeholder='Enter Seller Description' 
+                                value={sellerDescription} onChange={(e) => setSellerDescription(e.target.value)}>
+                                </input>                          
+                            </div>
+                            </>
+                        )
+                    }         
 
                     <div>
                         <label/>

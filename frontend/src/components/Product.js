@@ -19,7 +19,27 @@ export default function Product(props) {
                         <Rating rating = {product.rating}
                                 numReviews = {product.numReviews}>
                         </Rating>
-                        <div className = "price">Rs.{product.price}</div>
+                        <div className='row'>
+                            <div className = "price">Rs.{product.price}/-</div>
+                            <div>
+                                <Link to = {`/seller/${product.seller._id}`}>
+                                    {product.seller.seller.name
+                                        /*2 times seller.
+                                        One is for SELLER in productModel.js
+                                        second one is SELLER in userModel.js
+                                        From the userModel we get the name of the user
+                                        
+                                        If we donot edit the names of the users after
+                                        first time seed, then it will show error that 
+                                        name is undefined. So we in that case only
+                                        product.seller.name will work and not two seller
+                                        would. So we need to edit the name of the sellers
+                                        as many as sellers in our database*/
+                                    } 
+                                </Link>
+                            </div>
+                        </div>
+                            
                     </div>
                 </div>
        

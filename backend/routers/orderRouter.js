@@ -1,19 +1,77 @@
 import express from 'express';
 import expressAsyncHandler from 'express-async-handler';
 import Order from '../models/orderModel.js';
-import { isAdmin, isAuth } from '../utils.js';
+import User from '../models/userModel.js';
+import Product from '../models/productModel.js';
+import { isAdmin, isAuth, isSellerOrAdmin, mailgun, payOrderEmailTemplate } from '../utils.js';
 
 const orderRouter = express.Router();
 
 /*Creating Order History for the Admins. We need to fetch the data from the 
 database*/
-orderRouter.get('/', isAuth, isAdmin, expressAsyncHandler(async(req, res) => {
-    const orders = await Order.find({}).populate('user', 'name'); /*Find all orders as this is ADMIN*/ 
+orderRouter.get('/', isAuth, isSellerOrAdmin, expressAsyncHandler(async(req, res) => {
+
+    /*Order Lists For only SELLER*/
+    const seller = req.query.seller || '';
+    const sellerFilter = seller ? { seller } : {};
+
+    const orders = await Order.find({...sellerFilter}).populate(
+        'user', 'name'
+        ); /*Find all orders as this is ADMIN*/ 
     /*POPULATE fx is used to find the field namely user from the database and from that select only the usernames 
     of those who have ordered and out only their names9*/
     res.send(orders);
 })
 );
+
+/*For getting summary from the backend and showing as a chart view in the frontend*/
+
+orderRouter.get('/summary', isAuth, expressAsyncHandler(async(req, res) => {
+    /*expressAsyncHandler is used to catch errors*/
+    const orders = await Order.aggregate([
+        {
+        $group: {
+            _id: null,
+            numOrders: { $sum: 1},
+            totalSales: { $sum: '$totalPrice'},
+        },
+    },
+    ]);
+
+    const users = await User.aggregate([ /*aggregate is an array of elements*/
+        {
+        $group: {
+            _id: null,
+            numUsers: { $sum: 1},
+        },
+    },
+    ]);
+
+    const dailyOrders = await Order.aggregate([
+        {
+            $group: {
+                _id: { $dateToString: { format: '%Y-%m-%d', date: '$createdAt'}},
+                orders: { $sum: 1},
+                sales: { $sum: '$totalPrice'},
+            },
+        },
+    ]);
+
+    const productCategories = await Product.aggregate([
+        {
+            $group: {
+                _id: '$category',
+                count: { $sum: 1 },
+            },
+        },
+    ]);
+
+    res.send({ users, orders, dailyOrders, productCategories });
+})
+);
+
+/*-----------------------------------------------------------------------*/
+
 
 /*Creating API For Order History for Users. Actual API /api/orders/mine ==> Here
 we only workfor /mine, because the predecessor part is mentioned
@@ -35,6 +93,7 @@ orderRouter.post(
         res.status(400).send({ message: 'Cart is Empty! Error form the client side'});
     } else {
         const order =  new Order({
+            seller: req.body.orderItems[0].seller, /* [0] means 1st Order Item of Seller Field*/
             orderItems: req.body.orderItems,
             shippingAddress: req.body.shippingAddress,
             paymentMethod: req.body.paymentMethod,
@@ -68,7 +127,9 @@ orderRouter.get('/:id', isAuth, expressAsyncHandler(async(req, res) => {
 
 /*Getting payment information API from the server after payment*/
 orderRouter.put('/:id/pay', isAuth, expressAsyncHandler(async(req, res) => {
-    const order = await Order.findById(req.params.id);
+    const order = await Order.findById(req.params.id).populate(
+        'user', 'email name'
+    );
     if(order) {
         order.isPaid = true;
         order.paidAt = Date.now();
@@ -80,11 +141,26 @@ orderRouter.put('/:id/pay', isAuth, expressAsyncHandler(async(req, res) => {
         };
         /*Saving it in the Data Base*/
         const updatedOrder = await order.save();
+
+        /*After getting order details, we need to send an email to the user*/
+        mailgun().messages().send({
+            from: 'Saree <saree@mg.http://my-saree-app.herokuapp.com>',
+            to: `${order.user.name} <${order.user.email}>`,
+            subject: `New Order ${order._id}`,
+            html: payOrderEmailTemplate(order), /*this is a custom fx*/
+        }, (error, body) => {
+            if(error) {
+                console.log(error);
+            } else {
+                console.log(body);
+            }
+        }
+        );
         res.send({ message: 'Order Paid', order: updatedOrder});
     } else {
         res.status(404).send({ message: 'Oder not found '});
-    }
-})
+            }
+    })
 );
 
 

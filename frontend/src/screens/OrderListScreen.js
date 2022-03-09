@@ -7,6 +7,10 @@ import MessageBox from "../components/MessageBox";
 import { ORDER_DELETE_RESET } from "../constants/orderConstants";
 
 export default function OrderListScreen(props) {
+
+    /*For filtered order list of Specific SELLER*/
+    const sellerMode = props.match.path.indexOf('/seller') >= 0;
+
     /*getting OrderList object from OrderReducer*/
     const orderList = useSelector(state => state.orderList);
     const {loading, error, orders} = orderList;
@@ -16,6 +20,8 @@ export default function OrderListScreen(props) {
     const orderDelete = useSelector(state => state.orderDelete);
     const {loading: loadingDelete, error: errorDelete, success: successDelete} = orderDelete;
 
+    const userSignin = useSelector((state) => state.userSignin);
+    const {userInfo} = userSignin;
 
     const dispatch = useDispatch();
     useEffect (() => {
@@ -26,8 +32,8 @@ export default function OrderListScreen(props) {
         /*As we donot want to delete any more data after the first one choiced by
         us was deleted, we have to reset it and and show the order list*/
         
-        dispatch(listOrders()); /*Need to define the fx in orderActions.js in actions folder.*/
-    }, [dispatch, successDelete]);
+        dispatch(listOrders({ seller: sellerMode ? userInfo._id : ''})); /*Need to define the fx in orderActions.js in actions folder.*/
+    }, [dispatch, successDelete, sellerMode, userInfo._id]);
 
     const deleteHandler = (order) => {
         if(window.confirm('Are you sure to delete?')) {

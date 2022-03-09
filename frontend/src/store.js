@@ -5,16 +5,24 @@ import { orderCreateReducer,
   orderDeleteReducer, 
   orderDeliverReducer, 
   orderDetailsReducer, orderListReducer, orderMineListReducer, 
-  orderPayReducer } from './reducers/orderReducers';
+  orderPayReducer, 
+  orderSummaryReducer} from './reducers/orderReducers';
   
 import {
+  productCategoryListReducer,
   productCreateReducer,
   productDeleteReducer,
   productDetailsReducer,
   productListReducer,
+  productReviewCreateReducer,
   productUpdateReducer,
 } from './reducers/productReducers';
-import { userDetailsReducer, userRegisterReducer, userSigninReducer, userUpdateProfileReducer } from './reducers/userReducers';
+import { userDeleteReducer, userDetailsReducer, 
+  userListReducer, userRegisterReducer, 
+  userSigninReducer, 
+  userTopSellerListReducer, 
+  userUpdateProfileReducer, 
+  userUpdateReducer} from './reducers/userReducers';
 
 /*For retreving data from the backend to the cart items*/
 const initialState = {
@@ -61,6 +69,15 @@ const reducer = combineReducers({
   orderList: orderListReducer,
   orderDelete: orderDeleteReducer,
   orderDeliver: orderDeliverReducer,
+  userList: userListReducer,
+  userDelete: userDeleteReducer,
+  userUpdate: userUpdateReducer,
+  userTopSellersList: userTopSellerListReducer,
+  productCategoryList: productCategoryListReducer,
+  productReviewCreate: productReviewCreateReducer,
+  orderSummary: orderSummaryReducer,
+
+  
 });
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const store = createStore(
