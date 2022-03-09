@@ -202,6 +202,18 @@ export default function ShippingAddressScreen(props) {
          city: "Gangarampur",
       }
    ]
+
+   const udinajpurcityOrigin = [
+      {
+         id: 1,
+         city: "Kaliyaganj",
+      },
+
+      {
+         id: 1,
+         city: "Raiganj",
+      }
+   ]
             
    let type = null; /* Type variable stores different arrays for different drop downs*/
    let options = null; /*Set of options that a user will see*/
@@ -210,8 +222,9 @@ export default function ShippingAddressScreen(props) {
       type = maldacityOrigin;
    } else if (selected === "South Dinajpur") {
       type = ddinajpurcityOrigin;
+   } else if (selected === "North Dinajpur") {
+      type = udinajpurcityOrigin;
    }
-
    if (type) {
       options = type.map((c, index) => <option key={index} value={c.city}>{c.city}</option>)
    }
