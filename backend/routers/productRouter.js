@@ -79,7 +79,7 @@ productRouter.get('/', expressAsyncHandler(async(req, res) =>{
 
 /*Backend Data Fetching after it is inserted using the http://localhost:5001/api/products/seed address*/
 productRouter.get('/seed', expressAsyncHandler(async(req, res) =>{
-    await Product.remove({});
+    //await Product.remove({});
     const createdProducts = await Product.insertMany(data.products);
     res.send({ createdProducts });
     console.log(createdProducts);
