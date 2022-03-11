@@ -57,7 +57,7 @@ export default function ShippingAddressScreen(props) {
          {
             id: 1,
             country: 'India',
-            address: 'Kolkata',
+            
          },   
         
         
@@ -198,8 +198,23 @@ export default function ShippingAddressScreen(props) {
       },
 
       {
-         id: 1,
+         id: 2,
          city: "Gangarampur",
+      },
+
+      {
+         id: 3,
+         city: "Buniadpur",
+      },
+
+      {
+         id: 4,
+         city: "Kushmundi",
+      },
+
+      {
+         id: 5,
+         city: "Hili",
       }
    ]
 
@@ -210,9 +225,29 @@ export default function ShippingAddressScreen(props) {
       },
 
       {
-         id: 1,
+         id: 2,
          city: "Raiganj",
-      }
+      },
+
+      {
+         id: 3,
+         city: "Islampur",
+      },
+
+      {
+         id: 4,
+         city: "Dalkhola",
+      },
+
+      {
+         id: 5,
+         city: "Panjipara",
+      },
+
+      {
+         id: 6,
+         city: "Itahar",
+      },
    ]
             
    let type = null; /* Type variable stores different arrays for different drop downs*/
@@ -225,6 +260,8 @@ export default function ShippingAddressScreen(props) {
    } else if (selected === "North Dinajpur") {
       type = udinajpurcityOrigin;
    }
+
+
    if (type) {
       options = type.map((c, index) => <option key={index} value={c.city}>{c.city}</option>)
    }
@@ -303,7 +340,7 @@ export default function ShippingAddressScreen(props) {
                    
                     <label htmlFor="city">City</label>
                     {
-                     <select>
+                     <select id="city" onChange={(e) => setCity(e.target.value)} required>
                         <option>Select...</option>
 
                            {options}
@@ -324,7 +361,7 @@ export default function ShippingAddressScreen(props) {
                     <label htmlFor="postalCode">Postal Code</label>
                     <input type="text" 
                     id="postalCode" 
-                    placeholder="Enter your full name" 
+                    placeholder="Pin Number" 
                     value={postalCode} 
                     onChange={(e) => setPostalCode(e.target.value)} 
                     required>
