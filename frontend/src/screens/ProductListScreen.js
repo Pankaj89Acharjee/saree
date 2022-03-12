@@ -69,14 +69,14 @@ export default function ProductListScreen(props) {
 
     const createHandler = () => {
         
-            dispatch(createProduct()); /*Thi is a new action, it is to be 
+            dispatch(createProduct()); /*This is a new action, it is to be 
         implemented in the actions folder named as createProduct()*/  
     };
 
     return (
         <div>
             <div>
-            <h1> Product List</h1>
+            <h1> List of All products</h1>
             <button type="button" className="primary" onClick={createHandler}>
                 Create New Product
             </button>

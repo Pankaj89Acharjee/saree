@@ -96,6 +96,9 @@ export default function ShippingAddressScreen(props) {
     
      const districtOrigin = [
          
+
+      
+
         {
            id: 1,
            address: 'Kolkata',
@@ -135,48 +138,51 @@ export default function ShippingAddressScreen(props) {
         {
             id: 8,
             address: 'Coochbihar',
-         },
+         },   
 
          {
             id: 9,
-            address: 'Alipurduar',
-         },
-
-         {
-            id: 10,
             address: 'Jalpaiguri',
          },
 
          {
-            id: 11,
+            id: 10,
             address: 'Malda',
-         },
-
+         },  
+         
+         {
+            id: 11,
+            address: 'United Kingdom',
+         }, 
+   
          {
             id: 12,
-            address: 'Murshidabad',
-         },
-
+            address: 'England',
+         }, 
+   
          {
             id: 13,
-            address: 'Birbhum',
-         },
-
+            address: 'Russia',
+         }, 
+   
          {
             id: 14,
-            address: 'Burdwan East',
-         },
-
+            address: 'United States',
+         }, 
+   
          {
             id: 15,
-            address: 'Burdwan West',
-         },
-
+            address: 'Australia',
+         }, 
+   
          {
             id: 16,
-            address: 'Medinipore',
-         },                
+            address: 'South Africa',
+         }, 
     ]
+    
+
+
     
     const maldacityOrigin = [
          
@@ -187,8 +193,17 @@ export default function ShippingAddressScreen(props) {
 
       {
          id: 2,
-         city: '420More',
+         city: 'Malda Town',
       },  
+
+      {
+         id: 3,
+         city: 'Gazole',
+      }, 
+      {
+         id: 2,
+         city: 'Adina',
+      }, 
    ]
 
    const ddinajpurcityOrigin = [
@@ -249,7 +264,171 @@ export default function ShippingAddressScreen(props) {
          city: "Itahar",
       },
    ]
-            
+
+   const kolkataOrigin = [
+      {
+         id: 1,
+         city: "Baligunge",
+      },
+
+      {
+         id: 2,
+         city: "Baruipur",
+      },
+
+      {
+         id: 3,
+         city: "Jadavpur",
+      },
+
+      {
+         id: 4,
+         city: "New Alipore",
+      },
+
+      {
+         id: 5,
+         city: "Bou Bazar",
+      },
+
+      {
+         id: 6,
+         city: "Esplanade",
+      },
+   ]
+   
+   const darjeelingOrigin = [
+      {
+         id: 1,
+         city: "Darjeeling",
+      },
+
+      {
+         id: 2,
+         city: "Kurseong",
+      },
+
+      {
+         id: 3,
+         city: "Mirik",
+      },
+
+      {
+         id: 4,
+         city: "Siliguri",
+      },
+
+      {
+         id: 5,
+         city: "Bagdogra",
+      },
+
+      {
+         id: 6,
+         city: "Matigara",
+      },
+   ]
+
+   const howrahOrigin = [
+      {
+         id: 1,
+         city: "Howrah",
+      },     
+   ]
+
+   const jalpaiguriOrigin = [
+      {
+         id: 1,
+         city: "Jalpaiguri",
+      }, 
+      
+      {
+         id: 2,
+         city: "Malbazar",
+      }, 
+   ]
+
+   const coochbiharOrigin = [
+      {
+         id: 1,
+         city: "Coochbihar",
+      }, 
+      
+      {
+         id: 2,
+         city: "Dinhata",
+      }, 
+   ]
+
+   const s24Origin = [
+      {
+         id: 1,
+         city: "Baruipur(M)",
+      }, 
+      
+      {
+         id: 2,
+         city: "Garia",
+      }, 
+   ]
+
+   const n24Origin = [
+      {
+         id: 1,
+         city: "Barrackpore",
+      }, 
+      
+      {
+         id: 2,
+         city: "Naihati",
+      }, 
+   ]
+
+   const russiaOrigin = [
+      {
+         id: 1,
+         city: "Moscow",
+      },             
+   ]
+
+   const usaOrigin = [
+      {
+         id: 1,
+         city: "WashingtonDC",
+      },             
+   ]
+
+   const ukOrigin = [
+      {
+         id: 1,
+         city: "London",
+      },             
+   ]
+
+   const australiaOrigin = [
+      {
+         id: 1,
+         city: "Canberra",
+      },             
+   ]
+
+
+   const safricaOrigin = [
+      {
+         id: 1,
+         city: "Pretoria",
+      },             
+   ]
+
+   const englandOrigin = [
+      {
+         id: 1,
+         city: "London",
+      },             
+   ]
+
+
+
    let type = null; /* Type variable stores different arrays for different drop downs*/
    let options = null; /*Set of options that a user will see*/
 
@@ -259,12 +438,43 @@ export default function ShippingAddressScreen(props) {
       type = ddinajpurcityOrigin;
    } else if (selected === "North Dinajpur") {
       type = udinajpurcityOrigin;
-   }
+   } else if (selected === "Kolkata") {
+      type = kolkataOrigin;
+   } else if (selected === "Darjeeling") {
+      type = darjeelingOrigin;
+   } else if (selected === "Howrah") {
+      type = howrahOrigin;
+   } else if (selected === "Jalpaiguri") {
+      type = jalpaiguriOrigin;
+   } else if (selected === "Coochbihar") {
+      type = coochbiharOrigin;
+   } else if (selected === "South 24 Parganas") {
+      type = s24Origin;
+   } else if (selected === "North 24 Parganas") {
+      type = n24Origin;
+   } else if (selected === "South Africa") {
+      type = safricaOrigin;
+   }  else if (selected === "Australia") {
+      type = australiaOrigin;
+   }  else if (selected === "United States") {
+      type = usaOrigin;
+   }  else if (selected === "United Kingdom") {
+      type = ukOrigin;
+   }  else if (selected === "Russia") {
+      type = russiaOrigin;
+   }  else if (selected === "England") {
+      type = englandOrigin;
+   }  
+
+
+
 
 
    if (type) {
       options = type.map((c, index) => <option key={index} value={c.city}>{c.city}</option>)
    }
+
+
     return (
         <div>
             <CheckoutSteps step1 step2></CheckoutSteps>
@@ -322,7 +532,7 @@ export default function ShippingAddressScreen(props) {
 
                     </input>
                     */}
-                    <select id="address"  onChange= {((e) => setAddress(e.target.value), changeSelectOptionHandler)} required>
+                    <select id="address" onClick={changeSelectOptionHandler} onChange={((e) => setAddress(e.target.value))} required>
                         <option>Select...</option>
                         {
                             districtOrigin.map((data, index) => {

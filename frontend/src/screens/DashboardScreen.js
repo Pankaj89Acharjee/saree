@@ -16,7 +16,8 @@ export default function DashboardScreen() {
 
 
     return (
-        <div>
+        <div className="container">
+            
             <div className="row">
                 <h1>Dashboard</h1>
             </div>

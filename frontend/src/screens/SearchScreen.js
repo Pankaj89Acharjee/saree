@@ -151,13 +151,13 @@ export default function SearchScreen (props) {
 
                         </div>
 
-                        <div className="row center pagination" /*For showing page numbers in the below*/>
+                        <div className="row1 pagination" /*For showing page numbers in the below*/>
                            {
                                [...Array(pages).keys()].map((x) => (
 
                                
                                    <Link key={x + 1} to = {getFilterUrl({ page: x + 1})}>
-                                       Page{x + 1}</Link>
+                                       P{x + 1}</Link>
                                 ))
                            } 
                         </div>

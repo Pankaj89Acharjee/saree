@@ -64,8 +64,12 @@ function App() {
              <i className='fa fa-bars'></i>
             </button>
             */}
+            
             <Link className="brand" to="/">
-             "Handloom Textiles Ltd
+            <span className='spanhead'>
+               <img src="/images/headerB.jpeg"></img>
+             </span>
+             "Handloom Textiles Ltd             
             </Link>
           </div>
 

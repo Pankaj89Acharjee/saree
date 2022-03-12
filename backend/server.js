@@ -32,7 +32,7 @@ app.get('/api/config/paypal', (req, res) => {
 
 /*For displaying the newly added image and map that image to show in the UI*/
 const __dirname = path.resolve(); /*path is a class and needs to be imported*/
-app.use('/frontend/images', express.static(path.join(__dirname, '/frontend/images')));
+app.use('/uploads', express.static(path.join(__dirname, '/uploads')));
 /*In the above, joining the new file and pointing it to the new location*/
 
 app.use(express.static(path.join(__dirname, '/frontend/build')));

@@ -110,7 +110,7 @@ productRouter.post(
     const product = new Product({
         name: 'Sample product' + Date.now(),
         seller: req.user._id,
-        image: '/uploads',
+        image: '/images',
         price: 0,
         category: 'sample category',
         brand: 'sample brand',
@@ -131,7 +131,7 @@ productRouter.put('/:id', isAuth, isSellerOrAdmin, expressAsyncHandler(async(req
     /*Now getting product from the database*/
     const product = await Product.findById(productId); /*Here Product is class*/
     if (product) { /*Here product is object*/
-      /* if "products" exists, then fill the data of the datbase from the frontend*/
+      /* if "product" exists, then fill the data of the datbase from the frontend*/
       product.name = req.body.name;
       product.price = req.body.price;
       product.image = req.body.image;
