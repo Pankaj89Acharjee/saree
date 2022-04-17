@@ -55,7 +55,7 @@ export const isAdmin = (req, res, next) => { /*isAdmin created as a new fx*/
     if(req.user && req.user.isAdmin) {
         next();
     } else {
-        res.status(401).send({ message: 'Saree Says: Invalid Admin request/Token'});
+        res.status(401).send({ message: 'Saree Says: Invalid Admin request/Token. Pls check token and try again'});
     }
 };
 
